@@ -30,10 +30,9 @@ protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
 
-	DECLARE_EVENT(UHorizontalLerpComponent, FMoved)
-	FMoved& OnMoved() { return MovedEvent; }
+	
 
-	FMoved &MovedEvent;
+	
 
 public:	
 	// Called every frame

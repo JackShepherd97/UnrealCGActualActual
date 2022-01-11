@@ -18,13 +18,11 @@ enum class EDoorState
 	DS_Opened,
 };
 
-DECLARE_MULTICAST_DELEGATE(FOnDoorOpen);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnDoorOpen);
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class UNREALCGACTUALACTUAL_API UDoorInteractionComponent : public UActorComponent
 {
-	
-
 	GENERATED_BODY()
 
 public:	
