@@ -8,6 +8,8 @@
 
 class ATriggerBox;
 
+
+
 UENUM()
 enum class EDoorState
 {
@@ -16,10 +18,13 @@ enum class EDoorState
 	DS_Opened,
 };
 
+DECLARE_MULTICAST_DELEGATE(FOnDoorOpen);
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class UNREALCGACTUALACTUAL_API UDoorInteractionComponent : public UActorComponent
 {
+	
+
 	GENERATED_BODY()
 
 public:	
@@ -43,10 +48,9 @@ public:
 
 	ATriggerBox* DoorTrigger;
 
-	DECLARE_EVENT(FDoorInteractionComponent, FOpened)
-	FOpened& OnDoorOpen(){ return OpenedEvent; }
-
-	FOpened OpenedEvent;
+	
+	UPROPERTY(BlueprintAssignable, Category = "Door Interaction Component")
+	FOnDoorOpen DoorOpen;
 
 	UPROPERTY(VisibleAnywhere)
 	EDoorState DoorState;

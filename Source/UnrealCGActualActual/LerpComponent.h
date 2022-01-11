@@ -15,6 +15,7 @@ enum class ELerpState
 };
 
 
+
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class UNREALCGACTUALACTUAL_API ULerpComponent : public UActorComponent
 {
@@ -25,6 +26,8 @@ class UNREALCGACTUALACTUAL_API ULerpComponent : public UActorComponent
 public:	
 	// Sets default values for this component's properties
 	ULerpComponent();
+
+	
 
 protected:
 	// Called when the game starts

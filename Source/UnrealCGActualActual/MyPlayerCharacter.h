@@ -10,6 +10,7 @@ class UCameraComponent;
 class USpringArmComponent;
 class UHealthComponent;
 
+
 UCLASS()
 class UNREALCGACTUALACTUAL_API AMyPlayerCharacter : public ACharacter
 {

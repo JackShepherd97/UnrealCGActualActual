@@ -25,6 +25,8 @@ void UDoorInteractionComponent::BeginPlay()
 	FinalRotation = StartRotation + DesiredRotation;
 
 	DoorState = EDoorState::DS_Closed;
+
+	
 }
 
 
