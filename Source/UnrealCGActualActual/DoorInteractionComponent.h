@@ -9,7 +9,6 @@
 class ATriggerBox;
 
 
-
 UENUM()
 enum class EDoorState
 {
@@ -44,6 +43,7 @@ public:
 	float CurrentRotationTime = 0;
 	float TimeToRotate = 2.f;
 
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	ATriggerBox* DoorTrigger;
 
 	

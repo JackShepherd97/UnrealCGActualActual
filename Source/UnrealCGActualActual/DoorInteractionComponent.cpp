@@ -55,6 +55,7 @@ void UDoorInteractionComponent::TickComponent(float DeltaTime, ELevelTick TickTy
 		if (RotAlpha >= 1.0f)
 		{
 			DoorState = EDoorState::DS_Opened;
+			DoorOpen.Broadcast();
 		}
 	}
 
