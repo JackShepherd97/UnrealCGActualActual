@@ -1,24 +1,22 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "InteractionComponent.h"
-#include "Components/BoxComponent.h"
+#include "DealDamageComponent.h"
+#include "Components/CapsuleComponent.h"
 
 // Sets default values for this component's properties
-UInteractionComponent::UInteractionComponent()
+UDealDamageComponent::UDealDamageComponent()
 {
 	// Set this component to be initialized when the game starts, and to be ticked every frame.  You can turn these features
 	// off to improve performance if you don't need them.
 	PrimaryComponentTick.bCanEverTick = true;
 
-	TriggerBox = CreateDefaultSubobject<UBoxComponent>(TEXT("Trigger Capsule"));
-	//binding to events
-	
+	// ...
 }
 
 
 // Called when the game starts
-void UInteractionComponent::BeginPlay()
+void UDealDamageComponent::BeginPlay()
 {
 	Super::BeginPlay();
 
@@ -28,16 +26,10 @@ void UInteractionComponent::BeginPlay()
 
 
 // Called every frame
-void UInteractionComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
+void UDealDamageComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
 	// ...
 }
-
-void UInteractionComponent::OnInteractionSuccess()
-{
-	InteractionSuccess.Broadcast();
-}
-
 

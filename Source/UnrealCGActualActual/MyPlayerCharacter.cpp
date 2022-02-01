@@ -42,6 +42,12 @@ void AMyPlayerCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+	if(GetCharacterMovement()->IsFalling())
+	{
+		bHasLanded = false;
+
+	} 
+
 }
 
 // Called to bind functionality to input
@@ -116,12 +122,16 @@ void AMyPlayerCharacter::Landed(const FHitResult& Hit)
 
 	GetCharacterMovement()->GravityScale = DefaultGravityScale;
 	GetCharacterMovement()->bNotifyApex = true;
+	bHasLanded = true;
+	UE_LOG(LogTemp, Warning, TEXT("Landed"));
+	GetWorld()->GetTimerManager().SetTimer(LandedBoolHandle, this, &AMyPlayerCharacter::ResetLandedBool, 0.5f);
 }
 
 void AMyPlayerCharacter::NotifyJumpApex()
 {
 	GetCharacterMovement()->GravityScale = 1.5;
 	UE_LOG(LogTemp, Warning, TEXT("Apex"));
+	bHasLanded = false;
 }
 
 float AMyPlayerCharacter::TakeDamage(float Damage, struct FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser)

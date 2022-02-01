@@ -3,6 +3,13 @@
 
 #include "DoorInteractionComponent.h"
 #include "Engine/TriggerBox.h"
+#include "MyPlayerCharacter.h"
+#include "Components/BoxComponent.h"
+
+
+
+
+
 
 // Sets default values for this component's properties
 UDoorInteractionComponent::UDoorInteractionComponent()
@@ -11,7 +18,10 @@ UDoorInteractionComponent::UDoorInteractionComponent()
 	// off to improve performance if you don't need them.
 	PrimaryComponentTick.bCanEverTick = true;
 
-	// ...
+	ObjComp = CreateDefaultSubobject<UObjectiveComponent>(TEXT("Objective Component"));
+
+	TriggerBox->OnComponentBeginOverlap.AddDynamic(this, &UDoorInteractionComponent::OnOverlapBegin);
+	TriggerBox->OnComponentEndOverlap.AddDynamic(this, &UDoorInteractionComponent::OnOverlapEnd);
 }
 
 
@@ -25,7 +35,7 @@ void UDoorInteractionComponent::BeginPlay()
 	FinalRotation = StartRotation + DesiredRotation;
 
 	DoorState = EDoorState::DS_Closed;
-
+	//ObjComp->SetState(EObjectiveState::OS_Active);
 	
 }
 
@@ -35,17 +45,8 @@ void UDoorInteractionComponent::TickComponent(float DeltaTime, ELevelTick TickTy
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
-	if (DoorState == EDoorState::DS_Closed)
-	{
-		APawn* PlayerPawn = GetWorld()->GetFirstPlayerController()->GetPawn();
-
-		if (PlayerPawn && DoorTrigger->IsOverlappingActor(PlayerPawn))
-		{
-			DoorState = EDoorState::DS_Opening;
-			CurrentRotationTime = 0;
-		}
-	}
-	else if (DoorState == EDoorState::DS_Opening)
+	
+	if (DoorState == EDoorState::DS_Opening)
 	{
 		CurrentRotationTime += DeltaTime;
 		float RotAlpha = FMath::Clamp(CurrentRotationTime / TimeToRotate, 0.f, 1.0f);
@@ -54,11 +55,34 @@ void UDoorInteractionComponent::TickComponent(float DeltaTime, ELevelTick TickTy
 
 		if (RotAlpha >= 1.0f)
 		{
-			DoorState = EDoorState::DS_Opened;
-			DoorOpen.Broadcast();
+			OnDoorOpen();
 		}
 	}
 
 
 }
+
+void UDoorInteractionComponent::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
+{
+	Super::OnOverlapBegin(OverlappedComp, OtherActor, OtherComp, OtherBodyIndex, bFromSweep, SweepResult);
+
+	AMyPlayerCharacter* PlayerCharacter = Cast<AMyPlayerCharacter>(OtherActor);
+
+	if (PlayerCharacter)
+	{
+		DoorState = EDoorState::DS_Opening;
+		UE_LOG(LogTemp, Warning, TEXT("Player Overlap"));
+	}
+}
+
+
+void UDoorInteractionComponent::OnDoorOpen()
+{
+	CurrentRotationTime = 0;
+	DoorState = EDoorState::DS_Opened;
+	InteractionSuccess.Broadcast();
+
+	//ObjComp->SetState(EObjectiveState::OS_Completed);
+}
+
 

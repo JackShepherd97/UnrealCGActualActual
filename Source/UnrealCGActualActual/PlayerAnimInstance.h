@@ -24,6 +24,12 @@ class UNREALCGACTUALACTUAL_API UPlayerAnimInstance : public UAnimInstance
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
 	bool bIsInAir;
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
+	bool bHasLanded;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
+	float MovementOffsetYaw;
+
 public:
 
 	virtual void NativeInitializeAnimation() override;

@@ -33,9 +33,13 @@ class UNREALCGACTUALACTUAL_API AMyPlayerCharacter : public ACharacter
 
 	float DefaultGravityScale;
 
+	FTimerHandle LandedBoolHandle;
+
 public:
 	// Sets default values for this character's properties
 	AMyPlayerCharacter();
+
+	bool bHasLanded = false;
 
 protected:
 	// Called when the game starts or when spawned
@@ -68,5 +72,5 @@ public:
 
 	virtual float TakeDamage(float Damage, struct FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser) override;
 
-
+	void ResetLandedBool() { bHasLanded = false; }
 };
